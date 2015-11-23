@@ -1,7 +1,23 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
-public static class UnityExtensions
+public static class Extensions
 {
+    public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
+        this IEnumerable<TSource> source,
+        Func<TSource, TKey> keySelector)
+    {
+        HashSet<TKey> knownKeys = new HashSet<TKey>();
+        foreach (TSource element in source)
+        {
+            if (knownKeys.Add(keySelector(element)))
+            {
+                yield return element;
+            }
+        }
+    }
+
     public static Vector2 Rotate(this Vector2 vec, float degrees)
     {
         float radians = degrees * Mathf.Deg2Rad;
@@ -22,5 +38,10 @@ public static class UnityExtensions
             }
         }
         return null;
+    }
+
+    public static T RandomElement<T>(this T[] array)
+    {
+        return array[UnityEngine.Random.Range(0, array.Length)];
     }
 }
