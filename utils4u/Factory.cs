@@ -10,10 +10,6 @@ using UnityEditor;
 [CustomEditor(typeof(Factory))]
 public class FactoryEditor : Editor
 {
-    GameObject _prefab;
-    string[][] _componentFieldNames;
-    SerializedObject[][] _serializedFieldSettings;
-
     private struct ComponentMetadata
     {
         public Dictionary<string, int> ComponentIndex;
@@ -57,13 +53,15 @@ public class FactoryEditor : Editor
                 meta.ComponentNames[i] = type.Name;
                 var fieldInfos = componentFieldInfos[i];
                 meta.FieldInfos[i] = fieldInfos;
-                var fieldNames = fieldInfos.Select(fieldInfo => fieldInfo.Name).ToArray();
-                meta.FieldNames[i] = fieldNames;
-                var fieldIndex = new Dictionary<string, int>(fieldNames.Length);
-                for (int j = 0; j < fieldNames.Length; ++j)
+                var fieldNames = new string[fieldInfos.Length];
+                var fieldIndex = new Dictionary<string, int>(fieldInfos.Length);
+                for (int j = 0; j < fieldInfos.Length; ++j)
                 {
-                    fieldIndex[fieldNames[j]] = j;
+                    var fieldName = fieldInfos[j].Name;
+                    fieldNames[j] = fieldName;
+                    fieldIndex[fieldName] = j;
                 }
+                meta.FieldNames[i] = fieldNames;
                 meta.FieldIndex[i] = fieldIndex;
             }
             return meta;
