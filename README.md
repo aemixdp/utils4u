@@ -18,7 +18,7 @@ Provides a way to instantiate objects and set their specific fields to random va
 
 #### EventLogger
 
-Generic event looger. After binding, makes a `Debug.Log` calls printing names and args on every fired event of all the components of some gameobject and all of its children (at any hierarchical depth). Looks like this:
+Generic event logger. After binding, makes a `Debug.Log` calls printing names and args on every fired event of all the components of some gameobject and all of its children (at any hierarchical depth). Looks like this:
 
 ![eventlogger](https://raw.githubusercontent.com/aemxdp/utils4u/master/eventlogger.png)
 
